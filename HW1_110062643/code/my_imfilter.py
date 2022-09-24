@@ -40,9 +40,6 @@ def my_imfilter(image, imfilter):
     # =================================================================================
 
     # ============================== Start OF YOUR CODE ===============================
-    padding = 0
-    strides = 1
-    # imfilter = np.flipud(np.fliplr(imfilter))
 
     # Calculate shape of output img
     xImfilterShape = imfilter.shape[0] 
@@ -50,14 +47,15 @@ def my_imfilter(image, imfilter):
     xImgShape = image.shape[0] 
     yImgShape = image.shape[1]
     zImgShape = image.shape[2]
-
-    xOutput = int(((xImgShape - xImfilterShape + 2 * padding) / strides) + 1)
-    yOutput = int(((yImgShape - yImfilterShape + 2 * padding) / strides) + 1)
-    zOutput = zImgShape
-    # output = np.zeros((xOutput, yOutput, zOutput))
+    xfilterCenter = int(imfilter.shape[0]/2)
+    yfilterCenter = int(imfilter.shape[1]/2)
+    
     output = np.zeros_like(image)
 
-    imagePadded = image
+    # padding
+    imagePadded = np.pad(image, ((xfilterCenter, xfilterCenter), (yfilterCenter, yfilterCenter), (0, 0)), 'constant')
+
+    # imagePadded = image
     
 
     # if padding != 0:
@@ -68,24 +66,16 @@ def my_imfilter(image, imfilter):
     #     imagePadded = image
 
     # Iterate through image
-    for z in range(image.shape[2]):
-        for y in range(image.shape[1]):
-            # Exit Convolution
-            if y > image.shape[1] - yImfilterShape:
-                break
-            # Only Convolve if y has gone down by the specified Strides
-            if y % strides == 0:
-                for x in range(image.shape[0]):
-                    # Go to next row once kernel is out of bounds
-                    if x > image.shape[0] - xImfilterShape:
-                        break
-                    try:
-                        # Only Convolve if x has moved by the specified Strides
-                        if x % strides == 0:
-                            output[x, y, z] = (imfilter * imagePadded[x: x + xImfilterShape, y: y + yImfilterShape, z]).sum()
-                    except:
-                        break
+    for z in range(zImgShape):
+        for y in range(yImgShape):
+            for x in range(xImgShape):
+                output[x, y, z] = (imfilter * imagePadded[x: x + xImfilterShape, y: y + yImfilterShape, z]).sum()
 
+   
+
+    print('output shape:')
+    height, width, channels = output.shape
+    print(height, width, channels)
     return output
    
     # =============================== END OF YOUR CODE ================================
