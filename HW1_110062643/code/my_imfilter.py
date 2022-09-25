@@ -53,17 +53,19 @@ def my_imfilter(image, imfilter):
     output = np.zeros_like(image)
 
     # padding
-    imagePadded = np.pad(image, ((xfilterCenter, xfilterCenter), (yfilterCenter, yfilterCenter), (0, 0)), 'constant')
+    # imagePadded = np.pad(image, ((xfilterCenter, xfilterCenter), (yfilterCenter, yfilterCenter), (0, 0)), 'constant')
 
-    # imagePadded = image
+    
     
 
-    # if padding != 0:
-    #     imagePadded = np.zeros((image.shape[0] + padding*2, image.shape[1] + padding*2))
-    #     imagePadded[int(padding):int(-1 * padding), int(padding):int(-1 * padding)] = image
-    #     print(imagePadded)
-    # else:
-    #     imagePadded = image
+    # create imagePadded
+    padding = int(imfilter.shape[0]/2)  # padding width
+    if padding != 0:
+        imagePadded = np.zeros((image.shape[0] + padding*2, image.shape[1] + padding*2, image.shape[2]))
+        for z in range(image.shape[2]):
+            imagePadded[int(padding):int(-1 * padding), int(padding):int(-1 * padding), z] = image[:,:,z]
+    else:
+        imagePadded = image
 
     # Iterate through image
     for z in range(zImgShape):
@@ -76,7 +78,7 @@ def my_imfilter(image, imfilter):
     print('output shape:')
     height, width, channels = output.shape
     print(height, width, channels)
-    return output
+
    
     # =============================== END OF YOUR CODE ================================
 
