@@ -47,18 +47,16 @@ def my_imfilter(image, imfilter):
     xImgShape = image.shape[0] 
     yImgShape = image.shape[1]
     zImgShape = image.shape[2]
-    xfilterCenter = int(imfilter.shape[0]/2)
-    yfilterCenter = int(imfilter.shape[1]/2)
     
     output = np.zeros_like(image)
 
     # padding
+    # option1: padding by `np.pad`
+    # xfilterCenter = int(imfilter.shape[0]/2)
+    # yfilterCenter = int(imfilter.shape[1]/2)
     # imagePadded = np.pad(image, ((xfilterCenter, xfilterCenter), (yfilterCenter, yfilterCenter), (0, 0)), 'constant')
 
-    
-    
-
-    # create imagePadded
+    # option2: implement padding function
     padding = int(imfilter.shape[0]/2)  # padding width
     if padding != 0:
         imagePadded = np.zeros((image.shape[0] + padding*2, image.shape[1] + padding*2, image.shape[2]))
@@ -72,8 +70,6 @@ def my_imfilter(image, imfilter):
         for y in range(yImgShape):
             for x in range(xImgShape):
                 output[x, y, z] = (imfilter * imagePadded[x: x + xImfilterShape, y: y + yImfilterShape, z]).sum()
-
-   
 
     print('output shape:')
     height, width, channels = output.shape
