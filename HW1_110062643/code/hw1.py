@@ -14,8 +14,8 @@ def main():
     """ function to create hybrid images """
     # read images and convert to floating point format
     main_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    image1 = cv2.cvtColor(cv2.imread(os.path.join(main_path, 'data', 'man.png')), cv2.COLOR_BGR2RGB)
-    image2 = cv2.cvtColor(cv2.imread(os.path.join(main_path, 'data', 'man-cat.png')), cv2.COLOR_BGR2RGB)
+    image1 = cv2.cvtColor(cv2.imread(os.path.join(main_path, 'data', 'dog.bmp')), cv2.COLOR_BGR2RGB)
+    image2 = cv2.cvtColor(cv2.imread(os.path.join(main_path, 'data', 'cat.bmp')), cv2.COLOR_BGR2RGB)
     # image1 = cv2.resize(image1, (int(image1.shape[1]*0.7), int(image1.shape[0]*0.7)), cv2.INTER_LINEAR)
     # image2 = cv2.resize(image2, (int(image1.shape[1]*0.7), int(image1.shape[0]*0.7)), cv2.INTER_LINEAR)
     image1 = image1.astype(np.float32)/255
