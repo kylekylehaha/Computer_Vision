@@ -2,3 +2,4 @@
 *.docx
 toy.py
 course_handouts/
+.DS_Store
