@@ -1,4 +1,4 @@
-# 2022 NTHU EE Computer_Vision
+# 2022 Fall NTHU EE Computer_Vision
 ## HW1 Hybrid Image
 * Goal: Use filter to create subimage, and hybrid them.
 * Progress:
